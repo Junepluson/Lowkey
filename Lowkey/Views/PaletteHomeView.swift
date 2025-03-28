@@ -1,10 +1,3 @@
-//
-//  PaletteHomeView.swift
-//  Lowkey
-//
-//  Created by seongjun Hong on 3/28/25.
-//
-
 import SwiftUI
 
 struct PaletteHomeView: View {
@@ -26,19 +19,35 @@ struct PaletteHomeView: View {
                             .padding(10)
                     }
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.top)
 
-                List {
-                    ForEach(manager.palettes) { palette in
-                        NavigationLink(destination: DrawingView(paletteID: palette.id)) {
-                            Text(palette.name)
+                if manager.palettes.isEmpty {
+                    Spacer()
+                    Text("팔레트를 추가해보세요!")
+                        .foregroundColor(.gray)
+                    Spacer()
+                } else {
+                    List {
+                        ForEach(manager.palettes) { palette in
+                            NavigationLink(destination: DrawingView(paletteID: palette.id)) {
+                                VStack(alignment: .leading) {
+                                    Text(palette.name)
+                                        .font(.headline)
+                                    Text(palette.createdAt, style: .date)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.vertical, 4)
+                            }
                         }
                     }
+                    .listStyle(.plain)
                 }
             }
-            .onAppear {
-                manager.loadPalettes()
-            }
+        }
+        .onAppear {
+            manager.loadPalettes()
         }
     }
 }
