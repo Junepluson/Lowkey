@@ -1,10 +1,15 @@
 import SwiftUI
+import PencilKit
 
 struct DrawingView: View {
-    let paletteID: UUID  // ✅ 이 부분 추가
+    let paletteID: UUID
 
     var body: some View {
-        Text("Drawing for palette: \(paletteID.uuidString)")
-            .padding()
+        VStack(spacing: 0) {
+            CanvasRepresentable()
+                .navigationTitle("✍️ 드로잉 중")
+                .navigationBarTitleDisplayMode(.inline)
+        }
+        .background(Color.white.ignoresSafeArea())
     }
 }
